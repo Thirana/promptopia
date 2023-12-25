@@ -1,4 +1,23 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ["mongoose"],
+  },
+  images: {
+    domains: ["lh3.googleusercontent.com"],
+  },
+  webpack(config) {
+    config.experiments = {
+      ...config.experiments,
+      topLevelAwait: true,
+    };
 
-module.exports = nextConfig
+    config.resolve.fallback = {
+      "mongodb-client-encryption": false,
+      aws4: false,
+    };
+    return config;
+  },
+};
+
+module.exports = nextConfig;
